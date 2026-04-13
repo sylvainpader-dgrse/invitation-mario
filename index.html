@@ -97,6 +97,24 @@
             max-width: 250px;
             border-radius: 12px;
         }
+
+        .bulle {
+            position: absolute;
+            background: #333;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            pointer-events: none;
+            animation: disparaitre 1.5s forwards;
+            white-space: nowrap;
+        }
+
+        @keyframes disparaitre {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-40px); }
+        }
     </style>
 </head>
 <body>
@@ -115,6 +133,12 @@
 
     <script>
         const btnNon = document.getElementById('btnNon');
+        const phrases = [
+            "Hey non !", "Arrête !", "Stop !", "Je vais me fâcher !",
+            "Même pas en rêve !", "Nope !", "Pas touche !", "Tu rigoles ?",
+            "Essaie encore !", "Raté !"
+        ];
+        let phraseIndex = 0;
 
         function getRandomPosition() {
             const margin = 80;
@@ -123,12 +147,27 @@
             return { x, y };
         }
 
+        function afficherBulle() {
+            const bulle = document.createElement('div');
+            bulle.className = 'bulle';
+            bulle.textContent = phrases[phraseIndex % phrases.length];
+            phraseIndex++;
+
+            const rect = btnNon.getBoundingClientRect();
+            bulle.style.left = rect.left + 'px';
+            bulle.style.top = (rect.top - 10) + 'px';
+            document.body.appendChild(bulle);
+
+            setTimeout(() => bulle.remove(), 1500);
+        }
+
         btnNon.addEventListener('mouseover', fuir);
         btnNon.addEventListener('touchstart', fuir);
         btnNon.addEventListener('focus', fuir);
 
         function fuir(e) {
             e.preventDefault();
+            afficherBulle();
             const pos = getRandomPosition();
             btnNon.style.left = pos.x + 'px';
             btnNon.style.top = pos.y + 'px';
