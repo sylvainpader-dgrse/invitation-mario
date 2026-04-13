@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .btn-oui {
+            padding: 15px 50px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            background: #4CAF50;
+            color: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-oui:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-non {
+            padding: 15px 50px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            background: #f44336;
+            color: white;
+            position: absolute;
+            transition: none;
+        }
+
+        .message-oui {
+            display: none;
+            font-size: 1.3rem;
+            color: #4CAF50;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .cat-meme {
+            margin-top: 20px;
+            max-width: 250px;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="emoji">🍽️</div>
+        <h1>Mario, on fait un truc samedi soir ou dimanche après-midi ?</h1>
+        <div class="buttons">
+            <button class="btn-oui" onclick="direOui()">Oui</button>
+            <button class="btn-non" id="btnNon">Non</button>
+        </div>
+        <div class="message-oui" id="messageOui">
+            <p>Super ! J'ai trop hâte ! 🎉</p>
+            <img src="https://i.imgflip.com/2/9amg6.jpg" alt="Happy cat" class="cat-meme">
+        </div>
+    </div>
+
+    <script>
+        const btnNon = document.getElementById('btnNon');
+
+        function getRandomPosition() {
+            const margin = 80;
+            const x = margin + Math.random() * (window.innerWidth - margin * 2);
+            const y = margin + Math.random() * (window.innerHeight - margin * 2);
+            return { x, y };
+        }
+
+        btnNon.addEventListener('mouseover', fuir);
+        btnNon.addEventListener('touchstart', fuir);
+        btnNon.addEventListener('focus', fuir);
+
+        function fuir(e) {
+            e.preventDefault();
+            const pos = getRandomPosition();
+            btnNon.style.left = pos.x + 'px';
+            btnNon.style.top = pos.y + 'px';
+        }
+
+        function direOui() {
+            document.querySelector('.buttons').style.display = 'none';
+            document.getElementById('messageOui').style.display = 'block';
+            document.querySelector('.emoji').textContent = '🥳';
+        }
+    </script>
+</body>
+</html>
